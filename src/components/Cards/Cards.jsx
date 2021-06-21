@@ -1,23 +1,43 @@
 import React from "react";
-import { Card, CardContent, Typography, Grid } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
+import CardComponent from "./Card/Card";
+import styles from "./Cards.module.css";
 
-export const Cards = (props) => {
+const Info = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
+	if (!confirmed) {
+		return "Loading...";
+	}
+
 	return (
 		<div className={styles.container}>
+			<Typography gutterBottom variant="h4" component="h2">
+				Global
+			</Typography>
 			<Grid container spacing={3} justify="center">
-				<Grid item component={Card}>
-					<CardContent>
-						<Typography color="textSecondary" gutterBottom>
-							Infected
-						</Typography>
-						<Typography variant="h5">REAL DATA</Typography>
-						<Typography color="textSecondary">REAL DATE</Typography>
-						<Typography variant="body2">
-							Number of active cases of COVID-19
-						</Typography>
-					</CardContent>
-				</Grid>
+				<CardComponent
+					className={styles.infected}
+					cardTitle="Infected"
+					value={confirmed.value}
+					lastUpdate={lastUpdate}
+					cardSubtitle="Number of active cases from COVID-19."
+				/>
+				<CardComponent
+					className={styles.recovered}
+					cardTitle="Recovered"
+					value={recovered.value}
+					lastUpdate={lastUpdate}
+					cardSubtitle="Number of recoveries from COVID-19."
+				/>
+				<CardComponent
+					className={styles.deaths}
+					cardTitle="Deaths"
+					value={deaths.value}
+					lastUpdate={lastUpdate}
+					cardSubtitle="Number of deaths caused by COVID-19."
+				/>
 			</Grid>
 		</div>
 	);
 };
+
+export default Info;
